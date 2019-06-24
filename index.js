@@ -1,53 +1,60 @@
 // module.exports = () => {
 
 // };
+let c = console.log;
+c("*******Bienvenides*******");
+c("******Coloca la ruta o archivo a examinar*******");
 
-
-const process = require('process'); 
 let arrayTerminal = [];
-// const marked = require ('marked');
-// const fs = require ('fs');
-// const path = require ('path');
+let File = [];
+const marked = require ('marked');
+const fs = require ('fs');
+const process = require('process'); 
+const FileHound = require ('filehound');
+const path = require ('path');
 
 
-// const array =(path) =>{
-// let array = [];
-// fs.readFile(path,"utf-8", (error, data) =>{
-// if (error)
-// throw error;
-// const renderer = new marked.Renderer();
-// renderer.link =(href,title,text) =>{
-//   array.push({
-//     href:href,
-//     text:text,
-//     file:path
-//   });
-// }
-//  marked(data, {renderer:renderer});
-//     console.log(array);
-//   });
- 
-// }
-// console.log(array("./prueba.md"));
 
 process.argv.forEach((val, index) => {
    arrayTerminal.push (process.argv[index]);
-   console.log(`${index}: ${val}`);
-   
-     
+   //c(`${index}: ${val}`);
+   });
+c(arrayTerminal);
+//c(arrayTerminal[2]);
+
+
+const arrayFile =(path) =>{
+
+fs.readFile(path,"utf-8", (error, data) =>{
+if (error)
+throw error;
+const renderer = new marked.Renderer();
+renderer.link =(href,title,text) =>{
+File.push({
+href:href,
+text:text,
+file:path
 });
-console.log(arrayTerminal);
-console.log(arrayTerminal[2]);
+}
+marked(data, {renderer:renderer});
+c(File);
+});
+ 
+}
+arrayFile(arrayTerminal[2]);
+
+
+
+
 
 
 
 
 
 // const files = FileHound.create()
-//   .paths("/home/laboratoria/Desktop/SCL009-md-links")
-//   .ext('md')
-//   .find();
- 
-// files.then(console.log);
+// .paths("/home/laboratoria/Desktop/SCL009-md-links")
+// .ext('md')
+// .find();
+//  files.then(console.log);
 
 
