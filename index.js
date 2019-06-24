@@ -12,6 +12,7 @@ const fs = require ('fs');
 const process = require('process'); 
 const FileHound = require ('filehound');
 const path = require ('path');
+const fetch = require('node-fetch');
 
 
 
@@ -38,13 +39,30 @@ file:path
 }
 marked(data, {renderer:renderer});
 c(File);
+fetchlinks(File);
 });
+
+
+
  
 }
 arrayFile(arrayTerminal[2]);
 
+const fetchlinks = (File) => {
+File.forEach(el => {
 
+fetch(el.href)
+    .then(res => {
+        console.log(res.ok);
+        console.log(res.status);
+        console.log(res.statusText);
+      //   console.log(res.headers.raw());
+      //   console.log(res.headers.get('content-type'));
+    });
 
+   });
+
+}
 
 
 
