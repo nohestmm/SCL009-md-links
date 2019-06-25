@@ -3,7 +3,7 @@
 
 // };
 let c = console.log;
-c("*******Bienvenides*******");
+c("*******Bienvenidos*******");
 c("******Coloca la ruta o archivo a examinar*******");
 
 let arrayTerminal = [];
@@ -22,7 +22,21 @@ process.argv.forEach((val, index) => {
    //c(`${index}: ${val}`);
    });
 c(arrayTerminal);
+
 //c(arrayTerminal[2]);
+fs.stat(arrayTerminal[2],(error, stats) =>{
+
+   if (error){
+ console.log(error);
+}
+console.log(stats.isFile());
+console.log(stats.isDirectory());
+
+
+   });
+  
+
+
 
 
 const arrayFile =(path) =>{
@@ -44,10 +58,6 @@ c(File);
 //funcion que muestra los link ok
 fetchlinks(File);
 });
-
-
-
- 
 }
 
 // llamar a la funcion para imprimir los links en la consola
