@@ -26,12 +26,22 @@ c(arrayTerminal);
 //c(arrayTerminal[2]);
 fs.stat(arrayTerminal[2],(error, stats) =>{
 
-   if (error){
+   if (error)
  console.log(error);
-}
-console.log(stats.isFile());
-console.log(stats.isDirectory());
 
+if (stats.isFile()){
+c("****************");
+c("soy un path");
+c("****************");
+// llamar a la funcion para imprimir los links en la consola
+arrayFile(arrayTerminal[2]);
+}
+if (stats.isDirectory()){
+c("****************");
+c("soy un directorio");
+c("****************");
+searchfileinDirectory(arrayTerminal[2]);
+}
 
    });
   
@@ -60,8 +70,7 @@ fetchlinks(File);
 });
 }
 
-// llamar a la funcion para imprimir los links en la consola
-arrayFile(arrayTerminal[2]);
+
 
 //funcion para imprimir los links ok y no ok
 const fetchlinks = (File) => {
@@ -80,15 +89,12 @@ fetch(el.href)
 
 }
 
+const searchfileinDirectory = (directory) =>{
 
+const files = FileHound.create()
+.paths(directory)
+.ext('md')
+.find();
+files.then(console.log);
 
-
-
-
-// const files = FileHound.create()
-// .paths("/home/laboratoria/Desktop/SCL009-md-links")
-// .ext('md')
-// .find();
-//  files.then(console.log);
-
-
+}
