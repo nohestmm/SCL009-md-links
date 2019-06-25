@@ -1,9 +1,38 @@
 {
-  "name": "md-links",
-  "version": "0.1.0",
-  "dependencies": {
-    "filehound": "^1.17.0",
-    "marked": "^0.6.2",
-    "node-fetch": "^2.6.0"
-  }
+    "name": "md-links",
+    "version": "0.1.0",
+    "dependencies": {
+        "filehound": "^1.17.0",
+        "marked": "^0.6.2",
+        "node-fetch": "^2.6.0"
+    },
+    "description": "## Preámbulo",
+    "main": "index.js",
+    "directories": {
+        "test": "test"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/nohestmm/SCL009-md-links.git"
+    },
+    "keywords": [
+        "links",
+        "javascript",
+        "markdown",
+        "node",
+        "library"
+    ],
+    "author": "Nohemi Martinez",
+    "license": "ISC",
+    "bin": {
+        "md-links": "index.js"
+    },
+    "bugs": {
+        "url": "https://github.com/nohestmm/SCL009-md-links/issues"
+    },
+    "homepage": "https://github.com/nohestmm/SCL009-md-links#readme"
 }

@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // module.exports = () => {
 
 // };
@@ -38,7 +39,9 @@ file:path
 });
 }
 marked(data, {renderer:renderer});
+//console log para ver los links
 c(File);
+//funcion que muestra los link ok
 fetchlinks(File);
 });
 
@@ -46,16 +49,19 @@ fetchlinks(File);
 
  
 }
+
+// llamar a la funcion para imprimir los links en la consola
 arrayFile(arrayTerminal[2]);
 
+//funcion para imprimir los links ok y no ok
 const fetchlinks = (File) => {
 File.forEach(el => {
-
 fetch(el.href)
     .then(res => {
-        console.log(res.ok);
-        console.log(res.status);
-        console.log(res.statusText);
+     c(res.url);
+       c(res.ok);
+       c(res.status);
+       c(res.statusText);
       //   console.log(res.headers.raw());
       //   console.log(res.headers.get('content-type'));
     });
