@@ -3,7 +3,7 @@
 
 // };
 let c = console.log;
-c("*******Bienvenidos*******");
+c("****************Bienvenidos*********************");
 c("******Coloca la ruta o archivo a examinar*******");
 
 let arrayTerminal = [];
@@ -26,24 +26,22 @@ c(arrayTerminal);
 //c(arrayTerminal[2]);
 fs.stat(arrayTerminal[2],(error, stats) =>{
 
-   if (error)
+if (error)
  console.log(error);
-
 if (stats.isFile()){
-c("****************");
-c("soy un path");
-c("****************");
+c("**************************************************");
+c("*                   Soy un Path                  *");
+c("**************************************************");
 // llamar a la funcion para imprimir los links en la consola
 arrayFile(arrayTerminal[2]);
 }
 if (stats.isDirectory()){
-c("****************");
-c("soy un directorio");
-c("****************");
+c("***************************************************");
+c("*                Soy Un Directorio                *");
+c("***************************************************");
 searchfileinDirectory(arrayTerminal[2]);
 }
-
-   });
+});
   
 
 
@@ -95,6 +93,18 @@ const files = FileHound.create()
 .paths(directory)
 .ext('md')
 .find();
-files.then(console.log);
+
+files
+.then(res =>{
+   //c(res);
+res.forEach((el, index)=> {
+   c(`${index}:` + el);
+
+});
+
+})
+.catch(error =>{
+   c(error);
+});
 
 }
