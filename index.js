@@ -2,6 +2,8 @@
 // module.exports = () => {
 
 // };
+let options = [{"validate": 0},
+                {"stats" : 0}];
 let c = console.log;
 c("****************Bienvenidos*********************");
 c("******Coloca la ruta o archivo a examinar*******");
@@ -26,8 +28,12 @@ c(arrayTerminal);
 //c(arrayTerminal[2]);
 fs.stat(arrayTerminal[2],(error, stats) =>{
 
-if (error)
- console.log(error);
+if (error){ 
+   c(error);
+   
+}
+
+
 if (stats.isFile()){
 c("**************************************************");
 c("*                   Soy un Path                  *");
@@ -81,7 +87,8 @@ fetch(el.href)
        c(res.statusText);
       //   console.log(res.headers.raw());
       //   console.log(res.headers.get('content-type'));
-    });
+    })
+   
 
    });
 
@@ -100,7 +107,9 @@ files
 res.forEach((el, index)=> {
    c(`${index}:` + el);
 
+
 });
+arrayFile(res[0]);
 
 })
 .catch(error =>{
