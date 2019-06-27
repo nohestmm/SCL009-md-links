@@ -2,11 +2,11 @@
 // module.exports = () => {
 
 // };
-let options = [];
+let arrayLinkStatus = [];
+let objectLinkS = {};
 let c = console.log;
-c("****************Bienvenidos*********************");
-c("******Coloca la ruta o archivo a examinar*******");
-
+let options = [{"validate": "false"},
+                 {"stats": "false"}];
 let arrayTerminal = [];
 let File = [];
 const marked = require ('marked');
@@ -15,14 +15,47 @@ const process = require('process');
 const FileHound = require ('filehound');
 const path = require ('path');
 const fetch = require('node-fetch');
+const mdLinks= require('./mdLinks');
+
+c("****************Bienvenidos*********************");
+c("******Coloca la ruta o archivo a examinar*******");
+
+
+mdLinks(5,2)
+  .then(res => {
+  
+  })
+  .catch(error => c(error));
+
 
 
 
 process.argv.forEach((val, index) => {
-   arrayTerminal.push (process.argv[index]);
+   arrayTerminal.push(process.argv[index]);
    //c(`${index}: ${val}`);
    });
 c(arrayTerminal);
+
+if (arrayTerminal[3] && arrayTerminal[4]){
+  c("true; validate y stats");
+options.push(arrayTerminal[3]);
+options.push(arrayTerminal[4]);
+   c(`"opcion:" ${options}`);
+
+  }
+
+  
+
+
+else if (arrayTerminal[3] ){
+   options.v
+   c(`"opcion:" ${options}`);
+
+}
+
+
+
+
 
 //c(arrayTerminal[2]);
 fs.stat(arrayTerminal[2],(error, stats) =>{
@@ -51,12 +84,16 @@ searchfileinDirectory(arrayTerminal[2]);
 
 
 
-
+//cambiar readfile a promesas
 const arrayFile =(path) =>{
-
+return new Promise ((resolved, rejected) => {
 fs.readFile(path,"utf-8", (error, data) =>{
-if (error)
-throw error;
+if (error){
+rejected (error);
+
+}
+else{
+resolved(data);
 const renderer = new marked.Renderer();
 renderer.link =(href,title,text) =>{
 File.push({
@@ -79,25 +116,26 @@ File.forEach((el, index)=> {
 
 });
 }
-//funcion que muestra los link ok
-if (options.length>0)
+//funcion que muestra los link ok para validate o stats
+//if (options.length>0)
 fetchlinks(File);
+});
+
+
 });
 }
 
 
-
 //funcion para imprimir los links ok y no ok
 const fetchlinks = (File) => {
+
 File.forEach(el => {
 fetch(el.href)
     .then(res => {
        //c(res);
        
-     c(`url: ${res.url}`);
-       c(`boolean: ${res.ok}`);
-       c(`status: ${res.status}`);
-       c(`status texto: ${res.statusText}`);
+     c(`${res.url} ${res.ok} ${res.status} ${res.statusText}`);
+      
       //   console.log(res.headers.raw());
       //   console.log(res.headers.get('content-type'));
     })
@@ -109,10 +147,11 @@ fetch(el.href)
    });
 
 }
-
+//colocar una promesa
 const searchfileinDirectory = (directory) =>{
 
 const files = FileHound.create()
+.discard('node_modules')
 .paths(directory)
 .ext('md')
 .find();
@@ -123,13 +162,9 @@ files
 res.forEach((el, index)=> {
    //imprimir los archivos con basename
    c(`${index}: ${path.basename(el)}`);
-arrayFile(el);
-
-
+   arrayFile(el);
 
 });
-
-
 })
 .catch(error =>{
    c(error);
