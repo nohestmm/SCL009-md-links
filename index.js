@@ -2,8 +2,7 @@
 // module.exports = () => {
 
 // };
-let options = [{"validate": 0},
-                {"stats" : 0}];
+let options = [];
 let c = console.log;
 c("****************Bienvenidos*********************");
 c("******Coloca la ruta o archivo a examinar*******");
@@ -67,9 +66,21 @@ file:path
 });
 }
 marked(data, {renderer:renderer});
+//condicional para imprimir sin options
+if (options.length === 0){
 //console log para ver los links
-c(File);
+//c(File);
+File.forEach((el, index)=> {
+   
+   c(`${index}: href: ${el.href}`);
+   c(`   texto: ${el.text}`);
+   c(`   file: ${el.file}`);
+
+
+});
+}
 //funcion que muestra los link ok
+if (options.length>0)
 fetchlinks(File);
 });
 }
@@ -81,12 +92,17 @@ const fetchlinks = (File) => {
 File.forEach(el => {
 fetch(el.href)
     .then(res => {
-     c(res.url);
-       c(res.ok);
-       c(res.status);
-       c(res.statusText);
+       //c(res);
+       
+     c(`url: ${res.url}`);
+       c(`boolean: ${res.ok}`);
+       c(`status: ${res.status}`);
+       c(`status texto: ${res.statusText}`);
       //   console.log(res.headers.raw());
       //   console.log(res.headers.get('content-type'));
+    })
+    .catch(error =>{
+       c(error);
     })
    
 
@@ -105,11 +121,14 @@ files
 .then(res =>{
    //c(res);
 res.forEach((el, index)=> {
-   c(`${index}:` + el);
+   //imprimir los archivos con basename
+   c(`${index}: ${path.basename(el)}`);
+arrayFile(el);
+
 
 
 });
-arrayFile(res[0]);
+
 
 })
 .catch(error =>{
