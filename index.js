@@ -2,8 +2,7 @@
 // module.exports = () => {
 
 // };
-let arrayLinkStatus = [];
-let objectLinkS = {};
+
 let c = console.log;
 let options = [];
 let arrayTerminal = [];
@@ -18,15 +17,6 @@ const mdLinks= require('./mdLinks');
 
 c("****************Bienvenidos*********************");
 c("******Coloca la ruta o archivo a examinar*******");
-
-
-mdLinks(5,2)
-  .then(res => {
-  
-  })
-  .catch(error => c(error));
-
-
 
 
 process.argv.forEach((val, index) => {
@@ -50,24 +40,27 @@ if (arrayTerminal[3] && arrayTerminal[4]){
      }
     }
 else if (arrayTerminal[3]){
-if (arrayTerminal[3] === "validate"){
+if (arrayTerminal[3] === "validate" || arrayTerminal[3] === "--v"){
    options.push({
    validate:true
    });
 }
-if (arrayTerminal[3] === "stats"){
+if (arrayTerminal[3] === "stats"  || arrayTerminal[3] === "--s"){
    options.push({
    stats:true
    });
 }
 }
 c(options);
-c(typeof options);
 c(options.length);
-c(options[0]);
 
 
 
+mdLinks(5,options)
+  .then(res => {
+  
+  })
+  .catch(error => c(error));
 
 //c(arrayTerminal[2]);
 fs.stat(arrayTerminal[2],(error, stats) =>{
@@ -82,6 +75,9 @@ if (stats.isFile()){
 c("**************************************************");
 c("*                   Soy un Path                  *");
 c("**************************************************");
+
+
+
 // llamar a la funcion para imprimir los links en la consola
 arrayFile(arrayTerminal[2]);
 }
