@@ -5,8 +5,7 @@
 let arrayLinkStatus = [];
 let objectLinkS = {};
 let c = console.log;
-let options = [{"validate": "false"},
-                 {"stats": "false"}];
+let options = [];
 let arrayTerminal = [];
 let File = [];
 const marked = require ('marked');
@@ -37,22 +36,35 @@ process.argv.forEach((val, index) => {
 c(arrayTerminal);
 
 if (arrayTerminal[3] && arrayTerminal[4]){
-  c("true; validate y stats");
-options.push(arrayTerminal[3]);
-options.push(arrayTerminal[4]);
-   c(`"opcion:" ${options}`);
-
-  }
-
-  
-
-
-else if (arrayTerminal[3] ){
-   options.v
-   c(`"opcion:" ${options}`);
-
+   if ((arrayTerminal[3] === "--validate" && arrayTerminal[4] === "--stats" ) || (arrayTerminal[3] === "--v" && arrayTerminal[4] === "--s" ) ){
+      options.push({
+      validate:true},
+      {stats:true
+      });
+   }
+   if ((arrayTerminal[3] === "stats" && arrayTerminal[4] === "validate") || (arrayTerminal[3] === "--s" && arrayTerminal[4] === "--v" )){
+      options.push({
+      stats:true},
+      {validate:true
+      });
+     }
+    }
+else if (arrayTerminal[3]){
+if (arrayTerminal[3] === "validate"){
+   options.push({
+   validate:true
+   });
 }
-
+if (arrayTerminal[3] === "stats"){
+   options.push({
+   stats:true
+   });
+}
+}
+c(options);
+c(typeof options);
+c(options.length);
+c(options[0]);
 
 
 
@@ -113,17 +125,17 @@ File.forEach((el, index)=> {
    c(`   texto: ${el.text}`);
    c(`   file: ${el.file}`);
 
-
 });
 }
 //funcion que muestra los link ok para validate o stats
 //if (options.length>0)
 fetchlinks(File);
+}
 });
-
-
 });
 }
+
+
 
 
 //funcion para imprimir los links ok y no ok
