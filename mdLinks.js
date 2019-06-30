@@ -15,7 +15,7 @@ const mdLinks = (pathFile, options) => {
 
       if (stats.isFile()) {
          c("**************************************************");
-         c("*           Extrayendo links de un Archivo       *");
+         c("*            Leyendo links de un Archivo         *");
          c("**************************************************");
 
          // llamar a la funcion para imprimir los links en la consola
@@ -44,7 +44,7 @@ const mdLinks = (pathFile, options) => {
       }
       if (stats.isDirectory()) {
          c("***************************************************");
-         c("*        Extrayendo links de Un Directorio        *");
+         c("*           Leyendo links de Un Directorio        *");
          c("***************************************************");
          searchfileinDirectory(pathFile);
       }
@@ -100,15 +100,25 @@ const mdLinks = (pathFile, options) => {
 
                });
 
-              if (index === pathFile.length-1) {
+              if (index === pathFile.length-1 && options[0].validate){
 
                 resolved(c(arrayObjectFetch));
                
               }
 
-              
+              if(index === pathFile.length-1 && options[0].stats){
+               setTimeout(() => {
+                  
+               
+               resolved(statsForLinksFromFile(arrayObjectFetch));}, 5000);
+              }
+             
+
                //   console.log(res.headers.raw());
                //   console.log(res.headers.get('content-type'));
+           
+            
+
             })
             .catch(error => {
                c(error);
@@ -154,7 +164,7 @@ const mdLinks = (pathFile, options) => {
 
                      }
                      //funcion que muestra los link ok para validate o stats
-                     if (options.length > 0 && options[0].validate) {
+                     if (options.length > 0 && (options[0].validate || options[0].stats)) {
                         fetchlinks(res);
                      }
                   })
@@ -168,18 +178,20 @@ const mdLinks = (pathFile, options) => {
 
    }
 
-const statsForLinksFromFile = (res) => {
+const statsForLinksFromFile = (arrayToStats) => {
+let linksArray = [];
 let linksUnique = [];
 
-res.forEach(el => {
+arrayToStats.forEach(el => {
 
-   linksUnique.push(el.href);
+   linksArray.push(el.href);
 });
-linksUnique = [...new Set(linksUnique)];
-c(linksUnique);
+c(linksArray);
 
-      c(`Total: ${res.length}`);
-      c(`Unique: ${linksUnique.length}`);
+linksUnique = linksArray;
+linksUnique = [...new Set(linksUnique)];
+c(`Total: ${arrayToStats.length}`);
+c(`Unique: ${linksUnique.length}`);
 
    }
 

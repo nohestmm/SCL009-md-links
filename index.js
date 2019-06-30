@@ -1,7 +1,5 @@
 #!/usr/bin/env node
-// module.exports = () => {
 
-// };
 
 let c = console.log;
 let options = [];
