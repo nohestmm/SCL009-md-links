@@ -76,7 +76,7 @@ if (arrayTerminal[3] && arrayTerminal[4]){
      }
     }
 else if (arrayTerminal[3]){
-if (arrayTerminal[3] === "validate" || arrayTerminal[3] === "--v"){
+if (arrayTerminal[3] === "--validate" || arrayTerminal[3] === "--v"){
    options.push(
    {validate:true}
    );
