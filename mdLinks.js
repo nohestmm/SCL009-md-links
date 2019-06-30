@@ -27,8 +27,17 @@ const mdLinks = (pathFile, options) => {
                }
                //funcion que muestra los link ok para validate o stats
                if (options.length > 0 && options[0].validate) {
-                  fetchlinks(res);
+                  fetchlinks(res)
+                  .then(res =>{
+                     
+                  })
+                  .catch(error => c(error));
                }
+               if(options.length > 0 && options[0].stats){
+               statsForLinksFromFile(res);
+
+               }
+
             })
             .catch(error => c(error));
 
@@ -73,6 +82,7 @@ const mdLinks = (pathFile, options) => {
    const fetchlinks = (pathFile) => {
 
        let arrayObjectFetch = [];
+       return new Promise((resolved, rejected) => {
     
       pathFile.forEach((el,index )=> {
 
@@ -91,9 +101,12 @@ const mdLinks = (pathFile, options) => {
                });
 
               if (index === pathFile.length-1) {
-                c(arrayObjectFetch);
+
+                resolved(c(arrayObjectFetch));
                
               }
+
+              
                //   console.log(res.headers.raw());
                //   console.log(res.headers.get('content-type'));
             })
@@ -104,7 +117,7 @@ const mdLinks = (pathFile, options) => {
 
       });
 
-   
+       });
 
    }
 
@@ -155,7 +168,20 @@ const mdLinks = (pathFile, options) => {
 
    }
 
+const statsForLinksFromFile = (res) => {
+let linksUnique = [];
 
+res.forEach(el => {
+
+   linksUnique.push(el.href);
+});
+linksUnique = [...new Set(linksUnique)];
+c(linksUnique);
+
+      c(`Total: ${res.length}`);
+      c(`Unique: ${linksUnique.length}`);
+
+   }
 
 
 
