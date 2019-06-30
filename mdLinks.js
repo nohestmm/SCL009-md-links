@@ -179,16 +179,16 @@ const mdLinks = (pathFile, options) => {
    }
 
 const statsForLinksFromFile = (arrayToStats) => {
-let linksArray = [];
+
 let linksUnique = [];
 
 arrayToStats.forEach(el => {
 
-   linksArray.push(el.href);
+   linksUnique.push(el.href);
 });
-c(linksArray);
+c(linksUnique);
 
-linksUnique = linksArray;
+
 linksUnique = [...new Set(linksUnique)];
 c(`Total: ${arrayToStats.length}`);
 c(`Unique: ${linksUnique.length}`);
