@@ -1,6 +1,6 @@
 {
     "name": "md-links-nohestmm",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "dependencies": {
         "filehound": "^1.17.0",
         "jest": "^24.8.0",
