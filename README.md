@@ -1,9 +1,9 @@
-# Markdown Links / md-links-nohestmm ![package](images/package.jpg)
+# Markdown Links / md-links-nohestmm ![package](https://github.com/nohestmm/SCL009-md-links/blob/master/images/package.jpg?raw=true)
 
 
-![logo](images/logo-md-links.jpg)
+![logo](https://github.com/nohestmm/SCL009-md-links/blob/master/images/logo-md-links.jpg?raw=true)
 
-## ¿Qué es Markdown? ![mdicon](images/md.jpg)
+## ¿Qué es Markdown? ![mdicon](https://github.com/nohestmm/SCL009-md-links/blob/master/images/md.jpg?raw=true)
 
 Es un lenguaje de marcado, que se utiliza para publicar contenido, con etiquetas y delimitar cuando es un título, una imagen, un párrafo, un texto cursivo y links, entre otros. Es recurrente que los links  dejen de funcionar, por lo que de allí surge la necesidad de la creacion de esta librería, de modo que permita determinar cuáles estan operando aun.
 
@@ -27,11 +27,11 @@ A continuación se ejecutará la descarga del archivo de la siguiente manera:
 Listo! Ya instalaste el md-links- en tu archivo.
 
 
-## Ejemplo de uso
+## Ejemplo de uso ![instructions](images/instructions.jpg)
 
 Aquí te dejo un ejemplo de como hacer uso de la librería.
 
-* Leer un `archivo.md` sin opciones
+* Leer un `archivo.md` 
   
 1. Sin opciones
    
@@ -48,7 +48,15 @@ Aquí te dejo un ejemplo de como hacer uso de la librería.
 4. Con las opciones `--validate --stats`, `--stats --validate`, `--s --v`, `--v --s`
    
    ![stats](images/file-with-both-options.jpg)
-    ![stats](images/file-with-both-options-2.jpg)
+   ![stats](images/file-with-both-options-2.jpg)
+
+* Leer un `directorio`
+
+1. Sin opciones
+   
+   
+   
+
 
    
 

@@ -2,6 +2,7 @@
     "name": "md-links-nohestmm",
     "version": "0.1.1",
     "dependencies": {
+        "chalk": "^2.4.2",
         "eslint": "^6.0.1",
         "eslint-plugin-jest": "^22.7.1",
         "filehound": "^1.17.0",
@@ -9,8 +10,6 @@
         "marked": "^0.6.2",
         "node-fetch": "^2.6.0"
     },
-
-
     "description": "## Preámbulo",
     "main": "index.js",
     "directories": {

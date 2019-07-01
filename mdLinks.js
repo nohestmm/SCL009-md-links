@@ -3,6 +3,7 @@ const marked = require('marked');
 const FileHound = require('filehound');
 const path = require('path');
 const fetch = require('node-fetch');
+const chalk = require ('chalk')
 
 const mdLinks = (pathFile, options) => {
 
@@ -17,9 +18,9 @@ const mdLinks = (pathFile, options) => {
       }
 
       if (stats.isFile()) {
-         c("**************************************************");
-         c("*            Leyendo links de un Archivo         *");
-         c("**************************************************");
+         c(chalk.cyan("**************************************************"));
+         c(chalk.cyan("*            Leyendo links de un Archivo         *"));
+         c(chalk.cyan("**************************************************"));
 
          // llamar a la funcion para imprimir los links en la consola
          arrayFile(pathFile)
@@ -57,9 +58,9 @@ const mdLinks = (pathFile, options) => {
 
       }
       if (stats.isDirectory()) {
-         c("***************************************************");
-         c("*           Leyendo links de Un Directorio        *");
-         c("***************************************************");
+         c(chalk.cyan("***************************************************"));
+         c(chalk.cyan("*           Leyendo links de Un Directorio        *"));
+         c(chalk.cyan("***************************************************"));
          searchfileinDirectory(pathFile);
       }
    });
@@ -114,6 +115,7 @@ const mdLinks = (pathFile, options) => {
 
                   });
                   if (options[0].validate && options.length === 1) {
+
                      resolved(c(`${path.basename(el.file)} ${res.url} ${res.statusText} ${res.status} ${el.text}`));
                   }
 
@@ -193,7 +195,7 @@ const mdLinks = (pathFile, options) => {
    }
    //funcion para contar links unicos, reptidos y rotos
    const statsForLinksFromFileorDirectory = (arrayToStats) => {
-
+    //c(arrayToStats);
       let linksUnique = [];
 
       c(arrayToStats[0].file);
