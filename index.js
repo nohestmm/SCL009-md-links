@@ -4,7 +4,6 @@
 let c = console.log;
 let options = [];
 let arrayTerminal = [];
-let arrayLinks = [];
 
 const process = require('process'); 
 const mdLinks= require('./mdLinks');
@@ -22,7 +21,7 @@ if (arrayTerminal[3] && arrayTerminal[4]){
       {stats:true}
       );
  }
-   if ((arrayTerminal[3] === "stats" && arrayTerminal[4] === "validate") || (arrayTerminal[3] === "--s" && arrayTerminal[4] === "--v" )){
+   if ((arrayTerminal[3] === "--stats" && arrayTerminal[4] === "--validate") || (arrayTerminal[3] === "--s" && arrayTerminal[4] === "--v" )){
       options.push(
       {stats:true},
       {validate:true}
