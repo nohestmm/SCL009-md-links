@@ -1,5 +1,5 @@
 {
-    "name": "md-links",
+    "name": "md-links-nohestmm",
     "version": "0.1.0",
     "dependencies": {
         "filehound": "^1.17.0",

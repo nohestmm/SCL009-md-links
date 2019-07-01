@@ -1,4 +1,4 @@
-const mdLinks = require('./mdLinks');
+const mdLinks = require('../mdLinks');
 
 
 describe('mdLinks', () => {

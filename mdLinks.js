@@ -125,12 +125,6 @@ const mdLinks = (pathFile, options) => {
                      }, 5000);
 
                   }
-
-                 
-
-
-
-
                })
                .catch(error => {
                   c(error);
