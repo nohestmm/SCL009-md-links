@@ -16,5 +16,7 @@ La aplicacion permite examinar links colocando en la terminal el comando md-link
 Por otra parte se permite al usurio combinar las opciones validate y stats, ya sea md-links ` archivo o directorio --s --v` o  md-links ` archivo o directorio --v --s`, como tambien  md-links ` archivo o directorio --stats --validate` o ` archivo o directorio --validate --stats`. El resultado de esto seria la cantidad de links examinados, los unico y los que estan rotos.
 
 
-## Cómo instalar md-links-nohestmm 
+## Cómo instalar md-links-nohestmm? ![configuration](images/configuration.jpg)
+
+
 

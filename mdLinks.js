@@ -152,6 +152,7 @@ const mdLinks = (pathFile, options) => {
                arrayFile(el)
                   .then(res => {
                      if (options.length === 0) {
+                        if (res.length)
                         c(res);
 
                      }
