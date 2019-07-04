@@ -122,13 +122,13 @@ const mdLinks = (pathFile, options) => {
                  
 
                   //pasarlo a la promesa del fetch
-                  if (index === pathFile.length - 1) {
+                 
                      setTimeout(() => {
                      resolved(arrayObjectFetch);
                      }, 5000);
                      // c(`${chalk.green(path.basename(arrayObjectFetch[0].file))} ${chalk.yellowBright(res.url)} ${chalk.blue(res.statusText)} ${chalk.blue(res.status)} ${el.text}`);
                  
-                  }
+                  
 
 
                   // if ( moreOptions === true && index === pathFile.length - 1) {
@@ -226,24 +226,24 @@ const mdLinks = (pathFile, options) => {
       c(`Total: ${chalk.yellowBright(arrayToStats.length)}`);
       c(`Unique: ${chalk.yellowBright(linksUnique.length)}`);
 
-      // if (options.length === 2) {
-      //    //let brokenLinkStatus = [];
+      if (options.length === 2) {
+         let brokenLinkStatus = [];
 
 
-      //    let arrayWithoutRepeat = arrayToStats.filter((el, index, array) => {
+         let arrayWithoutRepeat = arrayToStats.filter((el, index, array) => {
 
-      //       return array.findIndex(valueArray => JSON.stringify(valueArray) === JSON.stringify(el)) === index
-      //    });
+            return array.findIndex(valueArray => JSON.stringify(valueArray) === JSON.stringify(el)) === index
+         });
 
-      //    arrayWithoutRepeat.forEach(el => {
-      //       brokenLinkStatus.push(el.statusText);
-      //    });
+         arrayWithoutRepeat.forEach(el => {
+            brokenLinkStatus.push(el.statusText);
+         });
 
 
-      //    let brokenLink = brokenLinkStatus.filter(el => el === "Not Found");
-      //    //c(`Broken: ${chalk.yellowBright(brokenLink.length)}`);
-      //}
-      //c(arrayToStats);
+         let brokenLink = brokenLinkStatus.filter(el => el === "Not Found");
+         c(`Broken: ${chalk.yellowBright(brokenLink.length)}`);
+      }
+      c(arrayToStats);
 
    }
 
