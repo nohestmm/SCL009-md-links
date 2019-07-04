@@ -3,13 +3,13 @@ const marked = require('marked');
 const FileHound = require('filehound');
 const path = require('path');
 const fetch = require('node-fetch');
-const chalk = require ('chalk')
+const chalk = require('chalk')
 
 const mdLinks = (pathFile, options) => {
 
 
    let c = console.log;
-   
+
 
    fs.stat(pathFile, (error, stats) => {
 
@@ -28,13 +28,16 @@ const mdLinks = (pathFile, options) => {
                if (options.length === 0) {
                   //c(`${res.file} ${res.href} ${res.text}`);
                   res.forEach(el => {
-                     c(` ${el.file} ${el.href} ${el.text}`);
-                  })
+                     c(` ${chalk.green(el.file)} ${chalk.yellowBright(el.href)} ${el.text}`);
+                  });
 
                }
-               if (options.length === 2  && ((options[0].validate && options[1].stats) || (options[1].validate && options[0].stats)) ) {
+               if (options.length === 2 && ((options[0].validate && options[1].stats) || (options[1].validate && options[0].stats))) {
                   fetchlinks(res, moreOptions = true)
                      .then(res => {
+                        setTimeout(() => {
+                           statsForLinksFromFileorDirectory(res);
+                        }, 2000);
 
                      })
                      .catch(error => c(error));
@@ -44,7 +47,9 @@ const mdLinks = (pathFile, options) => {
                if (options.length === 1 && options[0].validate) {
                   fetchlinks(res)
                      .then(res => {
-                        c(res);
+                        res.forEach(el => {
+                           c(` ${chalk.green(el.file)} ${chalk.yellowBright(el.href)} ${chalk.yellowBright(el.url)} ${chalk.blue(el.statusText)} ${chalk.blue(el.status)} ${el.text}`);
+                        });
 
                      })
                      .catch(error => c(error));
@@ -52,7 +57,7 @@ const mdLinks = (pathFile, options) => {
                if (options.length === 1 && options[0].stats) {
                   setTimeout(() => {
                      statsForLinksFromFileorDirectory(res);
-                  }, 5000);
+                  }, 2000);
                }
 
 
@@ -99,60 +104,36 @@ const mdLinks = (pathFile, options) => {
 
    //funcion para imprimir los links ok y no ok
    const fetchlinks = (pathFile) => {
-
       let arrayObjectFetch = [];
       return new Promise((resolved, rejected) => {
-
          pathFile.forEach((el, index) => {
-
             fetch(el.href)
                .then(res => {
-                  //c(res);
-
-                  arrayObjectFetch.push({
+                arrayObjectFetch.push({
                      href: res.url,
-
                      text: el.text,
                      file: path.basename(el.file),
                      status: res.status,
                      statusText: res.statusText
-
-
                   });
-                 
-
                   //pasarlo a la promesa del fetch
-                 
-                     setTimeout(() => {
+
+                  setTimeout(() => {
                      resolved(arrayObjectFetch);
-                     }, 5000);
-                     // c(`${chalk.green(path.basename(arrayObjectFetch[0].file))} ${chalk.yellowBright(res.url)} ${chalk.blue(res.statusText)} ${chalk.blue(res.status)} ${el.text}`);
-                 
-                  
-
-
-                  // if ( moreOptions === true && index === pathFile.length - 1) {
-
-                  //    setTimeout(() => {
-                  //       statsForLinksFromFileorDirectory(arrayObjectFetch);
-                  //    }, 5000);
-
-                  // }
-                  
-               })
+                  }, 2000);
+                  })
                .catch(error => {
-                  c(error);
+                  rejected(c(error));
                });
-          
+
          });
-  
+
       });
 
    }
 
    //colocar una promesa
    const searchfileinDirectory = (pathFile) => {
-
       const files = FileHound.create()
          .discard('node_modules')
          .paths(pathFile)
@@ -167,38 +148,40 @@ const mdLinks = (pathFile, options) => {
                arrayFile(el)
                   .then(res => {
                      if (options.length === 0) {
-                        if (res.length){
-                        res.forEach(el => {
-                           c(`${chalk.green(path.basename(el.file))} ${chalk.yellowBright(el.href)} ${el.text}`);
-                        });
-                     }
+                        if (res.length) {
+                           res.forEach(el => {
+                              c(`${chalk.green(path.basename(el.file))} ${chalk.yellowBright(el.href)} ${el.text}`);
+                           });
+                        }
 
                      }
                      //condicion para validate y stats extrayendo el status
-                     if (options.length === 2  && ((options[0].validate && options[1].stats) || (options[1].validate && options[0].stats)) ) {
+                     if (options.length === 2 && ((options[0].validate && options[1].stats) || (options[1].validate && options[0].stats))) {
                         fetchlinks(res)
                            .then(res => {
                               statsForLinksFromFileorDirectory(res);
-      
+
                            })
                            .catch(error => c(error));
-      
+
                      }
-      
-                     if (options.length === 1 && (options[0].validate )){
+
+                     if (options.length === 1 && (options[0].validate)) {
                         fetchlinks(res)
                            .then(res => {
-                              c(res);
-      
+                              res.forEach(el => {
+                                 c(` ${chalk.green(el.file)} ${chalk.yellowBright(el.href)} ${chalk.yellowBright(el.url)} ${chalk.blue(el.statusText)} ${chalk.blue(el.status)} ${el.text}`);
+                              });
+
                            })
                            .catch(error => c(error));
                      }
 
-                     if (options.length === 1 && (options[0].stats )) {
+                     if (options.length === 1 && (options[0].stats)) {
                         fetchlinks(res)
                            .then(res => {
                               statsForLinksFromFileorDirectory(res);
-      
+
                            })
                            .catch(error => c(error));
                      }
@@ -214,7 +197,7 @@ const mdLinks = (pathFile, options) => {
    }
    //funcion para contar links unicos, reptidos y rotos
    const statsForLinksFromFileorDirectory = (arrayToStats) => {
-    //c(arrayToStats);
+      //c(arrayToStats);
       let linksUnique = [];
 
       c(chalk.green(arrayToStats[0].file));
