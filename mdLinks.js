@@ -7,15 +7,20 @@ const chalk = require('chalk')
 const c = console.log;
 
 const mdLinks = (pathFile, options) => {
-   let c = console.log;
+   
 
-   fs.stat(pathFile, (error, stats) => {
+return new Promise ((resolved, rejected) =>{ 
+ fs.stat(pathFile, (error, stats) => {
 
       if (error) {
-         c(error);
+         rejected(c(error));
       }
 
-      if (stats.isFile()) {
+   else{
+
+         if (stats.isFile()) {
+            
+            
          c(chalk.cyan("**************************************************"));
          c(chalk.cyan("*            Leyendo links de un Archivo         *"));
          c(chalk.cyan("**************************************************"));
@@ -26,7 +31,7 @@ const mdLinks = (pathFile, options) => {
                if (options.length === 0) {
                   //c(`${res.file} ${res.href} ${res.text}`);
                   res.forEach(el => {
-                     c(` ${chalk.green(el.file)} ${chalk.yellowBright(el.href)} ${el.text}`);
+                     c(` ${chalk.green(path.basename(el.file))} ${chalk.yellowBright(el.href)} ${el.text}`);
                   });
 
                }
@@ -68,9 +73,21 @@ const mdLinks = (pathFile, options) => {
          c(chalk.cyan("***************************************************"));
          c(chalk.cyan("*           Leyendo links de Un Directorio        *"));
          c(chalk.cyan("***************************************************"));
-         searchfileinDirectory(pathFile, options);
+         searchfileinDirectory(pathFile, options)
+         .then(res=>{
+            
+              res.forEach(el=> {
+                 
+              
+               mdLinks(el, options)});
+         })
+         .catch(error => c(error));
       }
-   });
+   }
+   resolved(pathFile);
+});
+});
+ 
 
 }
    //funcion para capturar los links
@@ -132,6 +149,7 @@ const mdLinks = (pathFile, options) => {
 
    //colocar una promesa
    const searchfileinDirectory = (pathFile, options) => {
+      return new Promise ((resolved, rejected) =>{
       const files = FileHound.create()
          .discard('node_modules')
          .paths(pathFile)
@@ -141,63 +159,64 @@ const mdLinks = (pathFile, options) => {
       files
          .then(res => {
             //c(res);
-            res.forEach((el, index) => {
-               //imprimir los archivos con basename
-               arrayFile(el)
-                  .then(res => {
-                     if (options.length === 0) {
-                        if (res.length) {
-                           res.forEach(el => {
-                              c(`${chalk.green(path.basename(el.file))} ${chalk.yellowBright(el.href)} ${el.text}`);
-                           });
-                        }
+            // res.forEach((el, index) => {
+            //    //imprimir los archivos con basename
+            //    arrayFile(el)
+            //       .then(res => {
+            //          if (options.length === 0) {
+            //             if (res.length) {
+            //                res.forEach(el => {
+            //                   c(`${chalk.green(path.basename(el.file))} ${chalk.yellowBright(el.href)} ${el.text}`);
+            //                });
+            //             }
 
-                     }
-                     //condicion para validate y stats extrayendo el status
-                     if (options.length === 2 && ((options[0].validate && options[1].stats) || (options[1].validate && options[0].stats))) {
-                        fetchlinks(res)
-                           .then(res => {
-                              setTimeout(() => {
-                           statsForLinksFromFileorDirectory(res,options);
-                        }, 2000);
+            //          }
+            //          //condicion para validate y stats extrayendo el status
+            //          if (options.length === 2 && ((options[0].validate && options[1].stats) || (options[1].validate && options[0].stats))) {
+            //             fetchlinks(res)
+            //                .then(res => {
+            //                   setTimeout(() => {
+            //                statsForLinksFromFileorDirectory(res,options);
+            //             }, 2000);
 
 
-                           })
-                           .catch(error => c(error));
+            //                })
+            //                .catch(error => c(error));
 
-                     }
+            //          }
 
-                     if (options.length === 1 && (options[0].validate)) {
-                        fetchlinks(res)
-                           .then(res => {
-                              res.forEach(el => {
-                                 c(` ${chalk.green(el.file)} ${chalk.yellowBright(el.href)} ${chalk.yellowBright(el.url)} ${chalk.blue(el.statusText)} ${chalk.blue(el.status)} ${el.text}`);
-                              });
+            //          if (options.length === 1 && (options[0].validate)) {
+            //             fetchlinks(res)
+            //                .then(res => {
+            //                   res.forEach(el => {
+            //                      c(` ${chalk.green(el.file)} ${chalk.yellowBright(el.href)} ${chalk.yellowBright(el.url)} ${chalk.blue(el.statusText)} ${chalk.blue(el.status)} ${el.text}`);
+            //                   });
 
-                           })
-                           .catch(error => c(error));
-                     }
+            //                })
+            //                .catch(error => c(error));
+            //          }
 
-                     if (options.length === 1 && (options[0].stats)) {
-                        fetchlinks(res)
-                           .then(res => {
-                              setTimeout(() => {
-                               statsForLinksFromFileorDirectory(res);  
-                              }, 2000);
+            //          if (options.length === 1 && (options[0].stats)) {
+            //             fetchlinks(res)
+            //                .then(res => {
+            //                   setTimeout(() => {
+            //                    statsForLinksFromFileorDirectory(res);  
+            //                   }, 2000);
                               
 
-                           })
-                           .catch(error => c(error));
-                     }
-                  })
-                  .catch(error => c(error));
+            //                })
+            //                .catch(error => c(error));
+            //          }
+            //       })
+            //       .catch(error => c(error));
 
-            });
+            // });
          })
          .catch(error => {
-            c(error);
+            rejected(c(error));
          });
-
+         resolved(files);
+      });
    }
    //funcion para contar links unicos, reptidos y rotos
    const statsForLinksFromFileorDirectory = (arrayToStats, options) => {

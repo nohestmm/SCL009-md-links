@@ -42,8 +42,9 @@ if (arrayTerminal[3] === "--stats"  || arrayTerminal[3] === "--s"){
 
 }
 //llamando a la funcion mdLinks
-mdLinks(arrayTerminal[2],options);
-//   .then(res => {
-  
-//   })
-//   .catch(error => c(error));
+mdLinks(arrayTerminal[2],options)
+.then(res => {
+c(res);
+   
+})
+.catch(error=> c(error));
