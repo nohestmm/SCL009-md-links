@@ -4,12 +4,10 @@ const FileHound = require('filehound');
 const path = require('path');
 const fetch = require('node-fetch');
 const chalk = require('chalk')
+const c = console.log;
 
 const mdLinks = (pathFile, options) => {
-
-
    let c = console.log;
-
 
    fs.stat(pathFile, (error, stats) => {
 
@@ -36,7 +34,7 @@ const mdLinks = (pathFile, options) => {
                   fetchlinks(res, moreOptions = true)
                      .then(res => {
                         setTimeout(() => {
-                           statsForLinksFromFileorDirectory(res);
+                           statsForLinksFromFileorDirectory(res,options);
                         }, 2000);
 
                      })
@@ -70,11 +68,11 @@ const mdLinks = (pathFile, options) => {
          c(chalk.cyan("***************************************************"));
          c(chalk.cyan("*           Leyendo links de Un Directorio        *"));
          c(chalk.cyan("***************************************************"));
-         searchfileinDirectory(pathFile);
+         searchfileinDirectory(pathFile, options);
       }
    });
 
-
+}
    //funcion para capturar los links
    const arrayFile = (pathFile) => {
       return new Promise((resolved, rejected) => {
@@ -133,7 +131,7 @@ const mdLinks = (pathFile, options) => {
    }
 
    //colocar una promesa
-   const searchfileinDirectory = (pathFile) => {
+   const searchfileinDirectory = (pathFile, options) => {
       const files = FileHound.create()
          .discard('node_modules')
          .paths(pathFile)
@@ -159,7 +157,10 @@ const mdLinks = (pathFile, options) => {
                      if (options.length === 2 && ((options[0].validate && options[1].stats) || (options[1].validate && options[0].stats))) {
                         fetchlinks(res)
                            .then(res => {
-                              statsForLinksFromFileorDirectory(res);
+                              setTimeout(() => {
+                           statsForLinksFromFileorDirectory(res,options);
+                        }, 2000);
+
 
                            })
                            .catch(error => c(error));
@@ -180,7 +181,10 @@ const mdLinks = (pathFile, options) => {
                      if (options.length === 1 && (options[0].stats)) {
                         fetchlinks(res)
                            .then(res => {
-                              statsForLinksFromFileorDirectory(res);
+                              setTimeout(() => {
+                               statsForLinksFromFileorDirectory(res);  
+                              }, 2000);
+                              
 
                            })
                            .catch(error => c(error));
@@ -196,7 +200,7 @@ const mdLinks = (pathFile, options) => {
 
    }
    //funcion para contar links unicos, reptidos y rotos
-   const statsForLinksFromFileorDirectory = (arrayToStats) => {
+   const statsForLinksFromFileorDirectory = (arrayToStats, options) => {
       //c(arrayToStats);
       let linksUnique = [];
 
@@ -209,7 +213,7 @@ const mdLinks = (pathFile, options) => {
       c(`Total: ${chalk.yellowBright(arrayToStats.length)}`);
       c(`Unique: ${chalk.yellowBright(linksUnique.length)}`);
 
-      if (options.length === 2) {
+      if (options!= undefined && options.length ==2) {
          let brokenLinkStatus = [];
 
 
@@ -230,6 +234,6 @@ const mdLinks = (pathFile, options) => {
 
    }
 
-}
+
 
 module.exports = mdLinks;
