@@ -26,7 +26,10 @@ const mdLinks = (pathFile, options) => {
          arrayFile(pathFile)
             .then(res => {
                if (options.length === 0) {
-                  c(res);
+                  //c(`${res.file} ${res.href} ${res.text}`);
+                  res.forEach(el => {
+                     c(` ${el.file} ${el.href} ${el.text}`);
+                  })
 
                }
                if (options.length === 2  && ((options[0].validate && options[1].stats) || (options[1].validate && options[0].stats)) ) {
@@ -41,6 +44,7 @@ const mdLinks = (pathFile, options) => {
                if (options.length === 1 && options[0].validate) {
                   fetchlinks(res)
                      .then(res => {
+                        c(res);
 
                      })
                      .catch(error => c(error));
@@ -94,7 +98,7 @@ const mdLinks = (pathFile, options) => {
    }
 
    //funcion para imprimir los links ok y no ok
-   const fetchlinks = (pathFile,moreOptions) => {
+   const fetchlinks = (pathFile) => {
 
       let arrayObjectFetch = [];
       return new Promise((resolved, rejected) => {
@@ -107,6 +111,7 @@ const mdLinks = (pathFile, options) => {
 
                   arrayObjectFetch.push({
                      href: res.url,
+
                      text: el.text,
                      file: path.basename(el.file),
                      status: res.status,
@@ -114,25 +119,33 @@ const mdLinks = (pathFile, options) => {
 
 
                   });
-                  if (options[0].validate && options.length === 1) {
+                 
 
-                     resolved(c(`${path.basename(el.file)} ${res.url} ${res.statusText} ${res.status} ${el.text}`));
-                  }
-
-
-                  if ( moreOptions === true && index === pathFile.length - 1) {
-
+                  //pasarlo a la promesa del fetch
+                  if (index === pathFile.length - 1) {
                      setTimeout(() => {
-                        resolved(statsForLinksFromFileorDirectory(arrayObjectFetch));
+                     resolved(arrayObjectFetch);
                      }, 5000);
-
+                     // c(`${chalk.green(path.basename(arrayObjectFetch[0].file))} ${chalk.yellowBright(res.url)} ${chalk.blue(res.statusText)} ${chalk.blue(res.status)} ${el.text}`);
+                 
                   }
+
+
+                  // if ( moreOptions === true && index === pathFile.length - 1) {
+
+                  //    setTimeout(() => {
+                  //       statsForLinksFromFileorDirectory(arrayObjectFetch);
+                  //    }, 5000);
+
+                  // }
+                  
                })
                .catch(error => {
                   c(error);
-               })
+               });
+          
          });
-
+  
       });
 
    }
@@ -154,31 +167,37 @@ const mdLinks = (pathFile, options) => {
                arrayFile(el)
                   .then(res => {
                      if (options.length === 0) {
-                        if (res.length)
-                        c(res);
+                        if (res.length){
+                        res.forEach(el => {
+                           c(`${chalk.green(path.basename(el.file))} ${chalk.yellowBright(el.href)} ${el.text}`);
+                        });
+                     }
 
                      }
                      //condicion para validate y stats extrayendo el status
                      if (options.length === 2  && ((options[0].validate && options[1].stats) || (options[1].validate && options[0].stats)) ) {
-                        fetchlinks(res, moreOptions = true)
+                        fetchlinks(res)
                            .then(res => {
+                              statsForLinksFromFileorDirectory(res);
       
                            })
                            .catch(error => c(error));
       
                      }
       
-                     if (options.length === 1 && (options[0].validate ) ){
+                     if (options.length === 1 && (options[0].validate )){
                         fetchlinks(res)
                            .then(res => {
+                              c(res);
       
                            })
                            .catch(error => c(error));
                      }
 
                      if (options.length === 1 && (options[0].stats )) {
-                        fetchlinks(res, moreOptions = true)
+                        fetchlinks(res)
                            .then(res => {
+                              statsForLinksFromFileorDirectory(res);
       
                            })
                            .catch(error => c(error));
@@ -198,33 +217,33 @@ const mdLinks = (pathFile, options) => {
     //c(arrayToStats);
       let linksUnique = [];
 
-      c(arrayToStats[0].file);
+      c(chalk.green(arrayToStats[0].file));
       arrayToStats.forEach(el => {
          linksUnique.push(el.href);
       });
 
       linksUnique = [...new Set(linksUnique)];
-      c(`Total: ${arrayToStats.length}`);
-      c(`Unique: ${linksUnique.length}`);
+      c(`Total: ${chalk.yellowBright(arrayToStats.length)}`);
+      c(`Unique: ${chalk.yellowBright(linksUnique.length)}`);
 
-      if (options.length === 2) {
-         let brokenLinkStatus = [];
-
-
-         let arrayWithoutRepeat = arrayToStats.filter((el, index, array) => {
-
-            return array.findIndex(valueArray => JSON.stringify(valueArray) === JSON.stringify(el)) === index
-         });
-
-         arrayWithoutRepeat.forEach(el => {
-            brokenLinkStatus.push(el.statusText);
-         });
+      // if (options.length === 2) {
+      //    //let brokenLinkStatus = [];
 
 
-         let brokenLink = brokenLinkStatus.filter(el => el === "Not Found");
-         c(`Broken: ${brokenLink.length}`);
-      }
+      //    let arrayWithoutRepeat = arrayToStats.filter((el, index, array) => {
 
+      //       return array.findIndex(valueArray => JSON.stringify(valueArray) === JSON.stringify(el)) === index
+      //    });
+
+      //    arrayWithoutRepeat.forEach(el => {
+      //       brokenLinkStatus.push(el.statusText);
+      //    });
+
+
+      //    let brokenLink = brokenLinkStatus.filter(el => el === "Not Found");
+      //    //c(`Broken: ${chalk.yellowBright(brokenLink.length)}`);
+      //}
+      //c(arrayToStats);
 
    }
 
