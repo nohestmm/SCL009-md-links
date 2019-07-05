@@ -7,6 +7,7 @@ let arrayTerminal = [];
 
 const process = require('process'); 
 const mdLinks= require('./mdLinks');
+const chalk = require('chalk');
 
 process.argv.forEach((val, index) => {
    arrayTerminal.push(process.argv[index]);
@@ -42,9 +43,18 @@ if (arrayTerminal[3] === "--stats"  || arrayTerminal[3] === "--s"){
 
 }
 //llamando a la funcion mdLinks
+ if(arrayTerminal[2]){
 mdLinks(arrayTerminal[2],options)
 .then(res => {
+  
+      
+   
 c(res);
+c(options);
+   
    
 })
 .catch(error=> c(error));
+ }
+
+ else { c(chalk.blue("No hay archivo para leer"))}
