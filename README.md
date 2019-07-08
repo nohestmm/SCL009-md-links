@@ -19,7 +19,7 @@ Por otra parte se permite al usuario combinar las opciones validate y stats, ya 
 
 A continuación se muestra el diagrama de flujo en el cual esta basado el funcionamiento de la libreria: 
 
-![Diagrama](images/diagramadeflujo.jpg)
+![Diagrama](images/diagrama-de-flujo.jpg)
 
 
 ## ¿Cómo instalar md-links-nohestmm? ![configuration](https://github.com/nohestmm/SCL009-md-links/blob/master/images/configuration.jpg?raw=true)
