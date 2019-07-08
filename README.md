@@ -5,18 +5,18 @@
 
 ## ¿Qué es Markdown? ![mdicon](https://github.com/nohestmm/SCL009-md-links/blob/master/images/md.jpg?raw=true)
 
-Es un lenguaje de marcado, que se utiliza para publicar contenido, con etiquetas y delimitar cuando es un título, una imagen, un párrafo, un texto cursivo y links, entre otros. Es recurrente que los links  dejen de funcionar, por lo que de allí surge la necesidad de la creacion de esta librería, de modo que permita determinar cuáles estan operando aun.
+Es un lenguaje de marcado, que se utiliza para publicar contenido, con etiquetas y delimitar cuando es un título, una imagen, un párrafo, un texto cursivo y links, entre otros. Es recurrente que los links dejen de funcionar, por lo que de allí surge la necesidad de la creación de esta librería, de modo que permita determinar cuáles están operando aun.
 
-La siguiente librería tiene como finalidad permitirle al usuario examinar archivos o directorios que contengan alguna extensión .md y conocer el estatus, la cantidad de links, el origen, la referencia y los links que no estan en funcionamiento.
+La siguiente librería tiene como finalidad permitirle al usuario examinar archivos o directorios que contengan alguna extensión .md y conocer el estatus, la cantidad de links, el origen, la referencia y los links que no están en funcionamiento.
 
-## ¿Cómo funciona md-links-nohestmm v0.1.1?  ![settings](images/settings.jpg)
+## ¿Cómo funciona md-links-nohestmm v0.1.1?  ![settings](https://github.com/nohestmm/SCL009-md-links/blob/master/images/settings.jpg?raw=true)
 
-La aplicación permite examinar links colocando en la terminal el comando md-links  `archivo.md` o md-links `directorio`, lo que mostrará un objeto de links contenidos dentro de el o los archivos md, encontrados. Tambien permite utilizar dos opciones `--validate o --v` y `--stats o --v`. La primera para mostrar los links con su estatus y la referencia a la cual hace, y la segunda muestra la totalidad de los links y cuales son únicos. 
+La aplicación permite examinar links colocando en la terminal el comando md-links  `archivo.md` o md-links `directorio`, lo que mostrará un objeto de links contenidos dentro de el o los archivos .md, encontrados. También permite utilizar dos opciones `--validate o --v` y `--stats o --v`. La primera para mostrar los links con su estatus y la referencia a la cual hace, y la segunda muestra la totalidad de los links y cuales son únicos. 
 
-Por otra parte se permite al usurio combinar las opciones validate y stats, ya sea md-links ` archivo o directorio --s --v` o  md-links ` archivo o directorio --v --s`, como tambien  md-links ` archivo o directorio --stats --validate` o ` archivo o directorio --validate --stats`. El resultado de esto seria la cantidad de links examinados, los unico y los que estan rotos.
+Por otra parte se permite al usuario combinar las opciones validate y stats, ya sea md-links ` archivo o directorio --s --v` o  md-links ` archivo o directorio --v --s`, como también  md-links ` archivo o directorio --stats --validate` o ` archivo o directorio --validate --stats`. El resultado de esto sería la cantidad de links examinados, los únicos y los que están rotos.
 
 
-## ¿Cómo instalar md-links-nohestmm? ![configuration](images/configuration.jpg)
+## ¿Cómo instalar md-links-nohestmm? ![configuration](https://github.com/nohestmm/SCL009-md-links/blob/master/images/configuration.jpg?raw=true)
 
 Para la instalación debes colocar en la terminal, estando dentro de tu carpeta de proyecto, el siguiente comando `npm i md-links-nohestmm`
 
@@ -27,7 +27,7 @@ A continuación se ejecutará la descarga del archivo de la siguiente manera:
 Listo! Ya instalaste el md-links- en tu archivo.
 
 
-## Ejemplo de uso ![instructions](images/instructions.jpg)
+## Ejemplo de uso ![instructions](https://github.com/nohestmm/SCL009-md-links/blob/master/images/instructions.jpg?raw=true)
 
 Aquí te dejo un ejemplo de como hacer uso de la librería.
 
@@ -35,37 +35,37 @@ Aquí te dejo un ejemplo de como hacer uso de la librería.
   
 1. Sin opciones
    
-   ![sinoptionsfile](images/read-file-without-options.jpg)
+   ![sinoptionsfile](https://github.com/nohestmm/SCL009-md-links/blob/master/images/read-file-without-options.jpg?raw=true)
 
 2. Con opción `--validate o --v`
 
-   ![validatefile](images/read-file-with-validate.jpg)
+   ![validatefile](https://github.com/nohestmm/SCL009-md-links/blob/master/images/read-file-with-validate.jpg?raw=true)
 
 3. Con opción `--stats o --s`
 
-   ![statsfile](images/read-file-with-stats.jpg)
+   ![statsfile](https://github.com/nohestmm/SCL009-md-links/blob/master/images/read-file-with-stats.jpg?raw=true)
 
 4. Con las opciones `--validate --stats`, `--stats --validate`, `--s --v`, `--v --s`
    
-   ![statsvalidatefile](images/read-file-with-both-options.jpg)
+   ![statsvalidatefile](https://github.com/nohestmm/SCL009-md-links/blob/master/images/read-file-with-both-options.jpg?raw=true)
 
 * Leer un `directorio`
 
 1. Sin opciones
    
-     ![sinoptionsdirectory](images/read-directory-without-options.jpg)
+     ![sinoptionsdirectory](https://github.com/nohestmm/SCL009-md-links/blob/master/images/read-directory-without-options.jpg?raw=true)
 
 2. Con opción `--validate o --v`
 
-![validate](images/read-directory-with-validate.jpg)
+   ![validate](https://github.com/nohestmm/SCL009-md-links/blob/master/images/read-directory-with-validate.jpg?raw=true)
 
 3. Con opción `--stats o --s`
 
-![stats](images/read-directory-with-stats.jpg)
+   ![stats](https://github.com/nohestmm/SCL009-md-links/blob/master/images/read-directory-with-stats.jpg?raw=true)
 
 4. Con las opciones `--validate --stats`, `--stats --validate`, `--s --v`, `--v --s`
    
-![statsvalidate](images/read-directory-with-both-options.jpg)
+    ![statsvalidate](https://github.com/nohestmm/SCL009-md-links/blob/master/images/read-directory-with-both-options.jpg?raw=true)
    
 
 
