@@ -52,7 +52,7 @@ mdLinks(arrayTerminal[2],options)
 
       res.forEach(el =>{
  
-         c(`${chalk.white.bgRed.bold(path.basename(el.file)) } ${chalk.green.bold(el.href)} ${chalk.white.bold(el.text)}`)
+         c(`${chalk.white.bgRed.bold(el.file) } ${chalk.green.bold(el.href)} ${chalk.white.bold(el.text)}`)
 
       });
    }
@@ -70,7 +70,7 @@ mdLinks(arrayTerminal[2],options)
 
       res.forEach(el =>{
  
-         c(`${chalk.white.bgRed.bold(path.basename(el.file))} ${chalk.green.bold(el.href)} ${chalk.blue.bold(el.status)} ${chalk.blue.bold(el.statusText)} ${chalk.white.bold(el.text)}`)
+         c(`${chalk.white.bgRed.bold(el.file)} ${chalk.green.bold(el.href)} ${chalk.blue.bold(el.status)} ${chalk.blue.bold(el.statusText)} ${chalk.white.bold(el.text)}`)
 
       });   
    

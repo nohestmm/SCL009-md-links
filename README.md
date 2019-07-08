@@ -19,6 +19,8 @@ Por otra parte se permite al usuario combinar las opciones validate y stats, ya 
 
 A continuación se muestra el diagrama de flujo en el cual esta basado el funcionamiento de la libreria: 
 
+![Diagrama](images/diagramadeflujo.jpg)
+
 
 ## ¿Cómo instalar md-links-nohestmm? ![configuration](https://github.com/nohestmm/SCL009-md-links/blob/master/images/configuration.jpg?raw=true)
 
@@ -86,6 +88,8 @@ Para el desarrollo de la aplicación se utilizaron las siguientes dependencias:
 # Planificación
 
 Para llevar a cabo el desarrollo de la librería, se administraron las diferentes tareas utilizando Trello, el cual se puede consultar en el siguiente enlace [Click Aqui](https://trello.com/b/J157uGEt/mark-down)
+
+Autora : <<<<<<<Nohemi Martinez>>>>>>> Laboratoria 
    
 
    

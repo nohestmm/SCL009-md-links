@@ -2,6 +2,7 @@ const fs = require('fs');
 const marked = require('marked');
 const FileHound = require('filehound');
 const fetch = require('node-fetch');
+const path = require('path');
 const c = console.log;
 
 const mdLinks = (pathFile, options) => {
@@ -70,7 +71,7 @@ const arrayFile = (pathFile) => {
             const renderer = new marked.Renderer();
             renderer.link = (href, title, text) => {
                arrayLinks.push({
-                  file: pathFile,
+                  file: path.basename(pathFile),
                   href: href,
                   text: text
                  
