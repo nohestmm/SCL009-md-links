@@ -15,6 +15,10 @@ La aplicación permite examinar links colocando en la terminal el comando md-lin
 
 Por otra parte se permite al usuario combinar las opciones validate y stats, ya sea md-links ` archivo o directorio --s --v` o  md-links ` archivo o directorio --v --s`, como también  md-links ` archivo o directorio --stats --validate` o ` archivo o directorio --validate --stats`. El resultado de esto sería la cantidad de links examinados, los únicos y los que están rotos.
 
+# Diagrama de flujo
+
+A continuación se muestra el diagrama de flujo en el cual esta basado el funcionamiento de la libreria: 
+
 
 ## ¿Cómo instalar md-links-nohestmm? ![configuration](https://github.com/nohestmm/SCL009-md-links/blob/master/images/configuration.jpg?raw=true)
 
@@ -67,8 +71,21 @@ Aquí te dejo un ejemplo de como hacer uso de la librería.
    
     ![statsvalidate](https://github.com/nohestmm/SCL009-md-links/blob/master/images/read-directory-with-both-options.jpg?raw=true)
    
+# Aspectos técnicos
 
+Para el desarrollo de la aplicación se utilizaron las siguientes dependencias:
 
+* chalk
+* eslint
+* eslint-plugin-jest
+* filehound
+* jest
+* marked
+* node-fetch
+
+# Planificación
+
+Para llevar a cabo el desarrollo de la librería, se administraron las diferentes tareas utilizando Trello, el cual se puede consultar en el siguiente enlace [Click Aqui](https://trello.com/b/J157uGEt/mark-down)
    
 
    

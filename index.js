@@ -4,11 +4,11 @@
 let c = console.log;
 let options = [];
 let arrayTerminal = [];
-
-const process = require('process'); 
-const mdLinks= require('./mdLinks');
 const chalk = require('chalk');
 const path = require('path');
+const process = require('process'); 
+const mdLinks= require('./mdLinks');
+
 
 process.argv.forEach((val, index) => {
    arrayTerminal.push(process.argv[index]);
