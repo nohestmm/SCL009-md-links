@@ -39,22 +39,33 @@ Aquí te dejo un ejemplo de como hacer uso de la librería.
 
 2. Con opción `--validate o --v`
 
-   ![validate](images/file-with-validate.jpg)
+   ![validatefile](images/read-file-with-validate.jpg)
 
 3. Con opción `--stats o --s`
 
-   ![stats](images/file-with-stats.jpg)
+   ![statsfile](images/read-file-with-stats.jpg)
 
 4. Con las opciones `--validate --stats`, `--stats --validate`, `--s --v`, `--v --s`
    
-   ![stats](images/file-with-both-options.jpg)
-   ![stats](images/file-with-both-options-2.jpg)
+   ![statsvalidatefile](images/read-file-with-both-options.jpg)
 
 * Leer un `directorio`
 
 1. Sin opciones
    
+     ![sinoptionsdirectory](images/read-directory-without-options.jpg)
+
+2. Con opción `--validate o --v`
+
+![validate](images/read-directory-with-validate.jpg)
+
+3. Con opción `--stats o --s`
+
+![stats](images/read-directory-with-stats.jpg)
+
+4. Con las opciones `--validate --stats`, `--stats --validate`, `--s --v`, `--v --s`
    
+![statsvalidate](images/read-directory-with-both-options.jpg)
    
 
 

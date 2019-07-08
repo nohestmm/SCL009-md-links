@@ -1,11 +1,12 @@
 const fs = require('fs');
 const marked = require('marked');
 const FileHound = require('filehound');
-const path = require('path');
 const fetch = require('node-fetch');
 const c = console.log;
 
 const mdLinks = (pathFile, options) => {
+
+
    return new Promise((resolved, rejected) => {
       fs.stat(pathFile, (error, stats) => {
          if (error) {
@@ -20,10 +21,11 @@ const mdLinks = (pathFile, options) => {
                         resolved(res);
                      }
                      if (options.length === 2 && ((options[0].validate && options[1].stats) || (options[1].validate && options[0].stats))) {
-                        fetchlinks(res, moreOptions = true)
+                        fetchlinks(res)
                            .then(res => {
 
                               resolved(statsForLinksFromFileorDirectory(res, options));
+                              
                            })
                            .catch(error => c(error));
                      }
@@ -33,25 +35,23 @@ const mdLinks = (pathFile, options) => {
                               res.forEach(el => {
                                  setTimeout(() => {
                                     resolved(res);
-                                 }, 500);
-                                 resolved(res);
+                                 }, 1000);
+                                 
 
                               });
                            })
                            .catch(error => c(error));
                      }
                      if (options.length === 1 && options[0].stats) {
+
                         resolved(statsForLinksFromFileorDirectory(res, options));
                      }
                   })
-                  .catch(error => c(error));
+                  .catch(error => (error));
             }
             if (stats.isDirectory()) {
-               searchfileinDirectory(pathFile, options)
-                  .then(res => {
-                     resolved(fetchlinks(res));
-                  })
-                  .catch(error => c(error));
+               resolved(searchfileinDirectory(pathFile, options));
+            
             }
          }
       });
@@ -59,6 +59,7 @@ const mdLinks = (pathFile, options) => {
 }
 //funcion para capturar los links
 const arrayFile = (pathFile) => {
+   //return Promise.all(pathFile.map(file => {
    return new Promise((resolved, rejected) => {
       fs.readFile(pathFile, "utf-8", (error, data) => {
          if (error) {
@@ -69,38 +70,41 @@ const arrayFile = (pathFile) => {
             const renderer = new marked.Renderer();
             renderer.link = (href, title, text) => {
                arrayLinks.push({
+                  file: pathFile,
                   href: href,
-                  text: text,
-                  file: pathFile
+                  text: text
+                 
                });
             }
             marked(data, { renderer: renderer });
-            //condicional para imprimir sin options
-            if (arrayLinks.length !== 0)
-               resolved(arrayLinks);
+         
+            resolved(arrayLinks); 
+            
+               
          }
       });
    });
+//}));
 }
 //funcion para imprimir los links ok y no ok
 const fetchlinks = (pathFile) => {
-   let arrayObjectFetch = [];
+   let arrayObjectFetch =[];
+   arrayObjectFetch = pathFile;
    return new Promise((resolved, rejected) => {
-      pathFile.forEach((el) => {
+      arrayObjectFetch.forEach((el,index) => {
          fetch(el.href)
             .then(res => {
-               arrayObjectFetch.push({
-                  file: path.basename(el.file),
-                  href: res.url,
-                  status: res.status,
-                  statusText: res.statusText,
-                  text: el.text
-               });
+             
+                 
+               arrayObjectFetch[index].status = res.status;
+               arrayObjectFetch[index].statusText= res.statusText,
+                 
+               
                //pasarlo a la promesa del fetch
 
                setTimeout(() => {
                   resolved(arrayObjectFetch);
-               }, 1000);
+               }, 2000);
             })
             .catch(error => {
                rejected(error);
@@ -118,55 +122,51 @@ const searchfileinDirectory = (pathFile, options) => {
          .find();
       files
          .then(res => {
-            resolved(res);
-            //c(res);
-            // res.forEach((el, index) => {
-            //    //imprimir los archivos con basename
-            //    arrayFile(el)
-            //       .then(res => {
-            //          if (options.length === 0) {
-            //             if (res.length) {
-            //                res.forEach(el => {
-            //                   c(`${chalk.green(path.basename(el.file))} ${chalk.yellowBright(el.href)} ${el.text}`);
-            //                });
-            //             }
-            //          }
-            //          //condicion para validate y stats extrayendo el status
-            //          if (options.length === 2 && ((options[0].validate && options[1].stats) || (options[1].validate && options[0].stats))) {
-            //             fetchlinks(res)
-            //                .then(res => {
-            //                   setTimeout(() => {
-            //                statsForLinksFromFileorDirectory(res,options);
-            //             }, 2000);
-            //                })
-            //                .catch(error => c(error));
-            //          }
-            //          if (options.length === 1 && (options[0].validate)) {
-            //             fetchlinks(res)
-            //                .then(res => {
-            //                   res.forEach(el => {
-            //                      c(` ${chalk.green(el.file)} ${chalk.yellowBright(el.href)} ${chalk.yellowBright(el.url)} ${chalk.blue(el.statusText)} ${chalk.blue(el.status)} ${el.text}`);
-            //                   });
-            //                })
-            //                .catch(error => c(error));
-            //          }
-            //          if (options.length === 1 && (options[0].stats)) {
-            //             fetchlinks(res)
-            //                .then(res => {
-            //                   setTimeout(() => {
-            //                    statsForLinksFromFileorDirectory(res);  
-            //                   }, 2000);
-            //                })
-            //                .catch(error => c(error));
-            //          }
-            //       })
-            //       .catch(error => c(error));
-            // });
+       let arrayDirectory =[];
+       res.forEach(element => {
+         arrayDirectory.push(element);
+       });
+      Promise.all(arrayDirectory.map(el => {
+
+        return arrayFile(el);
+    
+  }))
+  .then(res=>{
+   let newArrayFile = Array.prototype.concat.apply([], res);
+      if(options.length === 0){
+     resolved(newArrayFile);
+    }
+
+    if (options.length === 2 && ((options[0].validate && options[1].stats) || (options[1].validate && options[0].stats))) {
+      fetchlinks(newArrayFile)
+         .then(res => {
+            
+            resolved(statsForLinksFromFileorDirectory(res, options));
          })
-         .catch(error => {
-            rejected(c(error));
-         });
-   });
+         .catch(error => (error));
+   }
+
+    if (options.length === 1 && options[0].validate) {
+      fetchlinks(newArrayFile)
+         .then(res => {
+         resolved(res);
+         
+         })
+         .catch(error => c(error));
+
+      }
+      if (options.length === 1 && options[0].stats) {
+
+         resolved(statsForLinksFromFileorDirectory(newArrayFile, options));
+      }
+
+     })
+  })
+  })
+.catch(error => (error))
+           
+           
+     
 }
 //funcion para contar links unicos, reptidos y rotos
 const statsForLinksFromFileorDirectory = (arrayToStats, options) => {
@@ -177,21 +177,16 @@ const statsForLinksFromFileorDirectory = (arrayToStats, options) => {
          linksUnique.push(el.href);
       });
       linksUnique = [...new Set(linksUnique)];
-      objectStatsValidate.Archivo = arrayToStats[0].file;
       objectStatsValidate.Total = arrayToStats.length;
-      objectStatsValidate.Unicos = linksUnique.length;
-
-
+      objectStatsValidate.Unique = linksUnique.length;
       if (options.length === 2) {
-         let brokenLinkStatus = [];
-         let arrayWithoutRepeat = arrayToStats.filter((el, index, array) => {
-            return array.findIndex(valueArray => JSON.stringify(valueArray) === JSON.stringify(el)) === index
-         });
-         arrayWithoutRepeat.forEach(el => {
+         let brokenLinkStatus =[];
+         arrayToStats.forEach(el => {
             brokenLinkStatus.push(el.statusText);
          });
-         let brokenLink = brokenLinkStatus.filter(el => el === "Not Found");
-         objectStatsValidate.Broken = brokenLink.length;
+       
+         let allBrokenLink = brokenLinkStatus.filter(el => el === "Not Found");
+         objectStatsValidate.Broken = allBrokenLink.length;
       }
 
       resolved(objectStatsValidate);

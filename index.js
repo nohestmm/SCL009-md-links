@@ -8,6 +8,7 @@ let arrayTerminal = [];
 const process = require('process'); 
 const mdLinks= require('./mdLinks');
 const chalk = require('chalk');
+const path = require('path');
 
 process.argv.forEach((val, index) => {
    arrayTerminal.push(process.argv[index]);
@@ -46,15 +47,43 @@ if (arrayTerminal[3] === "--stats"  || arrayTerminal[3] === "--s"){
  if(arrayTerminal[2]){
 mdLinks(arrayTerminal[2],options)
 .then(res => {
-  
-      
+
+   if(options.length === 0){
+
+      res.forEach(el =>{
+ 
+         c(`${chalk.white.bgRed.bold(path.basename(el.file)) } ${chalk.green.bold(el.href)} ${chalk.white.bold(el.text)}`)
+
+      });
+   }
+
+      if (options.length === 2 && ((options[0].validate && options[1].stats) || (options[1].validate && options[0].stats))) {
+        
+            c(chalk.white.bgRed.bold(`Total:`),res.Total);
+            c(chalk.white.bgGreen.bold(`Unique:`),res.Unique);
+            c(chalk.white.bgMagenta.bold(`Broken:`),res.Broken);
+                      
+
+   }
+
+   if (options.length === 1 && options[0].validate) {
+
+      res.forEach(el =>{
+ 
+         c(`${chalk.white.bgRed.bold(path.basename(el.file))} ${chalk.green.bold(el.href)} ${chalk.blue.bold(el.status)} ${chalk.blue.bold(el.statusText)} ${chalk.white.bold(el.text)}`)
+
+      });   
    
-c(res);
-c(options);
+   }
+   if (options.length === 1 && options[0].stats) {
+
+      c(chalk.white.bgRed.bold(`Total:`),res.Total);
+      c(chalk.white.bgGreen.bold(`Unique:`),res.Unique);
+   }
    
    
 })
 .catch(error=> c(error));
  }
 
- else { c(chalk.blue("No hay archivo para leer"))}
+ else { c(chalk.bgRed("No hay archivo para leer"))}
