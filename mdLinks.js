@@ -150,6 +150,7 @@ const searchfileinDirectory = (pathFile, options) => {
     if (options.length === 1 && options[0].validate) {
       fetchlinks(newArrayFile)
          .then(res => {
+            
          resolved(res);
          
          })
@@ -164,10 +165,7 @@ const searchfileinDirectory = (pathFile, options) => {
      })
   })
   })
-.catch(error => (error))
-           
-           
-     
+.catch(error => (error)) 
 }
 //funcion para contar links unicos, reptidos y rotos
 const statsForLinksFromFileorDirectory = (arrayToStats, options) => {
